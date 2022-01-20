@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,6 +17,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    @JoinColumn(name = "currency_id")
     private Currency fromCurrency;
     @OneToOne
     private Currency toCurrency;
@@ -31,6 +33,14 @@ public class History {
         this.toCurrency = toCurrency;
         this.coefficient = coefficient;
         this.timeStamp = timeStamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Currency getFromCurrency() {
@@ -63,5 +73,16 @@ public class History {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", fromCurrency=" + fromCurrency +
+                ", toCurrency=" + toCurrency +
+                ", coefficient=" + coefficient +
+                ", timeStamp=" + timeStamp +
+                '}';
     }
 }

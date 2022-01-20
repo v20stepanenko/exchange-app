@@ -25,12 +25,6 @@ public class ExchangerHttpClient {
         this.objectMapper = objectMapper;
     }
 
-    public static void main(String[] args) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ExchangerHttpClient httpClient = new ExchangerHttpClient(objectMapper);
-        String rawJson = httpClient.getData("https://v6.exchangerate-api.com/v6/2da8a6179931269acda3532c/latest/USD");
-    }
-
     public List<String> getEnableCurrency() {
         final String URI = URL + API_KEY + "latest/USD";
         try {
@@ -46,6 +40,18 @@ public class ExchangerHttpClient {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public Float getRate(String currencyFrom, String currencyTo) {
+        final String URI = URL + API_KEY + "/pair/" + currencyFrom + "/" + currencyTo;
+        try {
+            JsonNode node = objectMapper.readTree(getData(URI));
+            JsonNode leaf = node.get("conversion_rate");
+            return Float.valueOf(leaf.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private String getData(String uri) {
