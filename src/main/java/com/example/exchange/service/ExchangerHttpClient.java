@@ -33,15 +33,8 @@ public class ExchangerHttpClient {
 
     public List<String> getEnableCurrency() {
         final String URI = URL + API_KEY + "latest/USD";
-        String rawJson = null;
         try {
-            rawJson = getData(URI);
-        } catch (IOException e) {
-            new RuntimeException("Cant get data from " + URI, e);
-        }
-        JsonNode node = null;
-        try {
-            node = objectMapper.readTree(rawJson);
+            JsonNode node = objectMapper.readTree(getData(URI));
             JsonNode leaf = node.get("conversion_rates");
             if (leaf != null) {
                 List<String> keys = new ArrayList<>();
@@ -55,16 +48,18 @@ public class ExchangerHttpClient {
         return Collections.emptyList();
     }
 
-    private String getData(String url) throws IOException {
+    private String getData(String uri) {
         String result = "";
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(url);
+            HttpGet request = new HttpGet(uri);
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     result = EntityUtils.toString(entity);
                 }
             }
+        } catch (IOException e) {
+            new RuntimeException("Cant get data from " + uri, e);
         }
         return result;
     }
