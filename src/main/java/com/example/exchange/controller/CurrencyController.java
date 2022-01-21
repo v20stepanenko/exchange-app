@@ -2,6 +2,7 @@ package com.example.exchange.controller;
 
 import com.example.exchange.dto.response.AvailableCodeResponseDto;
 import com.example.exchange.dto.response.CurrencyRateResponseDto;
+import com.example.exchange.dto.response.HistoryResponseDto;
 import com.example.exchange.service.CurrencyService;
 import com.example.exchange.service.HistoryService;
 import java.util.Map;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class CurrencyController {
 
-    CurrencyService currencyService;
-    HistoryService historyService;
+    private final CurrencyService currencyService;
+    private final HistoryService historyService;
 
     public CurrencyController(CurrencyService currencyService, HistoryService historyService) {
         this.currencyService = currencyService;
@@ -37,9 +38,7 @@ public class CurrencyController {
     }
 
     @GetMapping("/history")
-    public String history(@RequestParam Map<String,String> allParams){
-        System.out.println(allParams.get("currencyTo"));
-        historyService.getByRequestParam(allParams);
-        return "arbaiten!!!";
+    public HistoryResponseDto history(@RequestParam Map<String,String> allParams){
+        return new HistoryResponseDto(historyService.getByRequestParam(allParams));
     }
 }

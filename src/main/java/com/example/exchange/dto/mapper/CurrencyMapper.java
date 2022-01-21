@@ -5,11 +5,8 @@ import com.example.exchange.model.Currency;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CurrencyMapper {
-    public Currency mapToModel(CurrencyDto currencyDto) {
-        return new Currency(currencyDto.getCode());
-    }
-
+public class CurrencyMapper implements Mapper<CurrencyDto, Currency> {
+    @Override
     public CurrencyDto mapToDto(Currency currency) {
         return new CurrencyDto(currency.getCode());
     }
