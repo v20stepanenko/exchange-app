@@ -28,7 +28,7 @@ public class CurrencyController {
     @GetMapping("/currency-codes")
     public AvailableCodeResponseDto currencyCodes() {
         AvailableCodeResponseDto availableCode = new AvailableCodeResponseDto();
-        currencyService.getAll().forEach(currency -> availableCode.availableCode.add(currency.getCode()));
+        availableCode.addCodes(currencyService.getAll());
         return availableCode;
     }
 
