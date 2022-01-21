@@ -10,7 +10,7 @@ public class HistoryMapper implements Mapper<HistoryDto, History> {
     public HistoryDto mapToDto(History history) {
         return new HistoryDto(history.getFromCurrency().getCode(),
                 history.getToCurrency().getCode(),
-                history.getCoefficient(),
+                history.getRate(),
                 history.getTimeStamp());
     }
 }

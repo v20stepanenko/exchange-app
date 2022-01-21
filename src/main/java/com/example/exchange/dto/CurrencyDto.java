@@ -1,7 +1,7 @@
 package com.example.exchange.dto;
 
 public class CurrencyDto {
-    private String code;
+    private final String code;
 
     public CurrencyDto(String code) {
         this.code = code;
@@ -11,7 +11,4 @@ public class CurrencyDto {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

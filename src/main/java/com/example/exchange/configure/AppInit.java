@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 public class AppInit {
     private final ExchangerHttpClient exchangerHttpClient;
     private final CurrencyService currencyService;
+    private final DataInjector dataInjector;
 
-    public AppInit(ExchangerHttpClient exchangerHttpClient, CurrencyService currencyService) {
+    public AppInit(ExchangerHttpClient exchangerHttpClient, CurrencyService currencyService, DataInjector dataInjector) {
         this.exchangerHttpClient = exchangerHttpClient;
         this.currencyService = currencyService;
+        this.dataInjector = dataInjector;
     }
 
     @PostConstruct
@@ -25,5 +27,6 @@ public class AppInit {
                 .map(Currency::new)
                 .collect(Collectors.toList());
         currencyService.saveAll(enableCurrency);
+        dataInjector.inject();
     }
 }

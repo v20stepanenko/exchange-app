@@ -4,6 +4,7 @@ import com.example.exchange.dao.CurrencyDAO;
 import com.example.exchange.dao.HistoryDAO;
 import com.example.exchange.model.Currency;
 import com.example.exchange.model.History;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,10 @@ public class CurrencyService {
         return currencyDAO.findAll();
     }
 
-    public float getRate(String currencyFrom, String currencyTo) {
+    public BigDecimal getRate(String currencyFrom, String currencyTo) {
         Currency currencyEntityFrom = currencyDAO.findByCode(currencyFrom);
         Currency currencyEntityTo = currencyDAO.findByCode(currencyTo);
-        float rate = exchangerHttpClient.getRate(currencyFrom, currencyTo);
+        BigDecimal rate = exchangerHttpClient.getRate(currencyFrom, currencyTo);
         History history = new History(currencyEntityFrom, currencyEntityTo, rate, LocalDateTime.now());
         historyDAO.save(history);
         return exchangerHttpClient.getRate(currencyFrom, currencyTo);

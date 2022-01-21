@@ -5,6 +5,7 @@ import com.example.exchange.dto.response.CurrencyRateResponseDto;
 import com.example.exchange.dto.response.HistoryResponseDto;
 import com.example.exchange.service.CurrencyService;
 import com.example.exchange.service.HistoryService;
+import java.math.BigDecimal;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class CurrencyController {
 
     @GetMapping("/rates/{currencyFrom}/{currencyTo}")
     public CurrencyRateResponseDto currencyRate(@PathVariable String currencyFrom, @PathVariable String currencyTo) {
-        float rate = currencyService.getRate(currencyFrom, currencyTo);
+        BigDecimal rate = currencyService.getRate(currencyFrom, currencyTo);
         return new CurrencyRateResponseDto(currencyFrom, currencyTo, rate);
     }
 

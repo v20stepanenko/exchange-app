@@ -3,6 +3,7 @@ package com.example.exchange.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -42,12 +43,12 @@ public class ExchangerHttpClient {
         return Collections.emptyList();
     }
 
-    public Float getRate(String currencyFrom, String currencyTo) {
+    public BigDecimal getRate(String currencyFrom, String currencyTo) {
         final String URI = URL + API_KEY + "/pair/" + currencyFrom + "/" + currencyTo;
         try {
             JsonNode node = objectMapper.readTree(getData(URI));
             JsonNode leaf = node.get("conversion_rate");
-            return Float.valueOf(leaf.toString());
+            return BigDecimal.valueOf(Float.parseFloat(leaf.toString()));
         } catch (IOException e) {
             e.printStackTrace();
         }

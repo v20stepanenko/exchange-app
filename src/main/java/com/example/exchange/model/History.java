@@ -1,5 +1,6 @@
 package com.example.exchange.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,17 +20,17 @@ public class History {
     private Currency fromCurrency;
     @OneToOne
     private Currency toCurrency;
-    private float coefficient;
+    private BigDecimal rate;
     @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
 
     public History() {
     }
 
-    public History(Currency fromCurrency, Currency toCurrency, float coefficient, LocalDateTime timeStamp) {
+    public History(Currency fromCurrency, Currency toCurrency, BigDecimal rate, LocalDateTime timeStamp) {
         this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;
-        this.coefficient = coefficient;
+        this.rate = rate;
         this.timeStamp = timeStamp;
     }
 
@@ -57,12 +58,12 @@ public class History {
         this.toCurrency = toCurrency;
     }
 
-    public float getCoefficient() {
-        return coefficient;
+    public BigDecimal getRate() {
+        return rate;
     }
 
-    public void setCoefficient(float coefficient) {
-        this.coefficient = coefficient;
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 
     public LocalDateTime getTimeStamp() {
@@ -79,7 +80,7 @@ public class History {
                 "id=" + id +
                 ", fromCurrency=" + fromCurrency +
                 ", toCurrency=" + toCurrency +
-                ", coefficient=" + coefficient +
+                ", coefficient=" + rate +
                 ", timeStamp=" + timeStamp +
                 '}';
     }

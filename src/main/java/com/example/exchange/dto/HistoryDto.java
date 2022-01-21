@@ -1,17 +1,18 @@
 package com.example.exchange.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class HistoryDto {
-    private String currencyFromCode;
-    private String currencyToCode;
-    private float coefficient;
-    private LocalDateTime time;
+    private final String currencyFromCode;
+    private final String currencyToCode;
+    private final BigDecimal rate;
+    private final LocalDateTime time;
 
-    public HistoryDto(String currencyFromCode, String currencyToCode, float coefficient, LocalDateTime time) {
+    public HistoryDto(String currencyFromCode, String currencyToCode, BigDecimal coefficient, LocalDateTime time) {
         this.currencyFromCode = currencyFromCode;
         this.currencyToCode = currencyToCode;
-        this.coefficient = coefficient;
+        this.rate = coefficient;
         this.time = time;
     }
 
@@ -23,8 +24,8 @@ public class HistoryDto {
         return currencyToCode;
     }
 
-    public float getCoefficient() {
-        return coefficient;
+    public BigDecimal getRate() {
+        return rate;
     }
 
     public LocalDateTime getTime() {
