@@ -6,5 +6,4 @@ public class CurrencyDto {
     public CurrencyDto(String code) {
         this.code = code;
     }
-
 }
