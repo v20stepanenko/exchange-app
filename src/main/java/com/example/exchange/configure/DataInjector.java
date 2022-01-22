@@ -29,7 +29,7 @@ public class DataInjector {
     }
 
     private void injectHistory(String cFrom, String cTo, BigDecimal rate, LocalDateTime time) {
-        System.out.println("Inject DATA !!!! ");
+        System.out.println("Inject HISTORY DATA to DB !!!! ");
         Currency currencyFrom = currencyDAO.findByCode(cFrom);
         Currency currencyTo = currencyDAO.findByCode(cTo);
         History history = new History(currencyFrom, currencyTo, rate, time);

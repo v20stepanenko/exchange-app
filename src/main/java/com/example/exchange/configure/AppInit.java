@@ -27,6 +27,5 @@ public class AppInit {
                 .map(Currency::new)
                 .collect(Collectors.toList());
         currencyService.saveAll(enableCurrency);
-        dataInjector.inject();
     }
 }
