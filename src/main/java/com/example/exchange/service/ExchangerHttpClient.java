@@ -54,7 +54,7 @@ public class ExchangerHttpClient {
         return null;
     }
 
-    private String getData(String uri) {
+    public String getData(String uri) {
         String result = "";
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(uri);
