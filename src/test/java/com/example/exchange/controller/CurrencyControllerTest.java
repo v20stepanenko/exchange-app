@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,11 @@ class CurrencyControllerTest {
     private HistoryDAO historyDAO;
     private static int countHistories;
 
-    @PostConstruct
-    public void init() {
+    @BeforeEach
+    public void setUp() {
         Currency uah = currencyDAO.findByCode("UAH");
         Currency usd = currencyDAO.findByCode("USD");
         Currency eur = currencyDAO.findByCode("EUR");
-        System.out.println(uah);
         LocalDateTime time = LocalDateTime.parse("2022-01-20T19:34:50.63");
         List<History> historyList = new LinkedList<>() {{
             add(new History(usd, uah, BigDecimal.valueOf(26), time));
@@ -69,6 +69,12 @@ class CurrencyControllerTest {
         if (countHistories == 0) {
             throw new RuntimeException("You don't have histories in DB");
         }
+    }
+
+    @AfterEach
+    public void cleanUp(){
+        historyDAO.deleteAll();
+        currencyDAO.deleteAll();
     }
 
 
