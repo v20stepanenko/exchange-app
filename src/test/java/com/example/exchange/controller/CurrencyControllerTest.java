@@ -31,10 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = ExchangeAppApplication.class)
 @TestPropertySource("/application-test.properties")
 @Transactional
 class CurrencyControllerTest {
