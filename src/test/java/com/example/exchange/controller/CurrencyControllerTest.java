@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = ExchangeAppApplication.class)
 @TestPropertySource("/application-test.properties")
+@Transactional
 class CurrencyControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -72,7 +74,7 @@ class CurrencyControllerTest {
     }
 
     @AfterEach
-    public void cleanUp(){
+    public void cleanUp() {
         historyDAO.deleteAll();
         currencyDAO.deleteAll();
     }
@@ -80,6 +82,7 @@ class CurrencyControllerTest {
 
     @Test
     public void availableCodeLoads() throws Exception {
+
         this.mockMvc.perform(get("/currency-codes"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -92,6 +95,7 @@ class CurrencyControllerTest {
 
     @Test
     public void ratesCurrencyUSD_UAH() throws Exception {
+
         this.mockMvc.perform(get("/rates/USD/UAH"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -103,6 +107,7 @@ class CurrencyControllerTest {
 
     @Test
     public void ratesCurrencyUSD_USD() throws Exception {
+
         this.mockMvc.perform(get("/rates/USD/USD"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -120,12 +125,14 @@ class CurrencyControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.histories", hasSize(countHistories)))
                 .andExpect(content().string(containsString(
-                        "{\"currencyFromCode\":\"USD\",\"currencyToCode\":\"UAH\",\"rate\":26.00,\"time\":\"2022-01-27T19:34:50.63\"}"
+                        "{\"currencyFromCode\":\"USD\",\"currencyToCode\":\"UAH\",\"rate\":26,\"time\":\"2022-01-20T19:34:50.63\"}"
                 )));
     }
 
     @Test
     public void historyByFromCurrencyUAH_empty_Ok() throws Exception {
+
+        Thread.sleep(400);
         this.mockMvc.perform(get("/history?fromCurrency=UAH"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -135,6 +142,7 @@ class CurrencyControllerTest {
 
     @Test
     public void historyByFromCurrencyUSD_Ok() throws Exception {
+
         this.mockMvc.perform(get("/history?fromCurrency=USD"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -179,7 +187,7 @@ class CurrencyControllerTest {
     }
 
     @Test
-    public void historyByToCurrencyUah_Ok() throws Exception {
+    public void historyByToCurrencyUAH_Ok() throws Exception {
         this.mockMvc.perform(get("/history?toCurrency=UAH"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -214,11 +222,11 @@ class CurrencyControllerTest {
                 .andExpect(jsonPath("$.histories", hasSize(3)))
                 .andExpect(content().json("{\"histories\":"
                         + "[{\"currencyFromCode\":\"USD\",\"currencyToCode\":\"UAH\","
-                        + "\"rate\":26.00,\"time\":\"2022-02-20T19:34:50.63\"},"
+                        + "\"rate\":26,\"time\":\"2022-02-20T19:34:50.63\"},"
                         + "{\"currencyFromCode\":\"EUR\",\"currencyToCode\":\"UAH\","
-                        + "\"rate\":38.00,\"time\":\"2022-02-20T19:34:50.63\"},"
+                        + "\"rate\":38,\"time\":\"2022-02-20T19:34:50.63\"},"
                         + "{\"currencyFromCode\":\"EUR\",\"currencyToCode\":\"USD\","
-                        + "\"rate\":1.10,\"time\":\"2022-02-20T19:34:50.63\"}]}"));
+                        + "\"rate\":1.1,\"time\":\"2022-02-20T19:34:50.63\"}]}"));
 
         // I'm tired of writing such tests
 
@@ -252,6 +260,7 @@ class CurrencyControllerTest {
 
     @Test
     public void historyByRangeData_Ok() throws Exception {
+
         this.mockMvc.perform(get("/history?fromCurrency=USD&dataRange=2"))
                 .andDo(print())
                 .andExpect(status().isOk())
