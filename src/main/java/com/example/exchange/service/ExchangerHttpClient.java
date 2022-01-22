@@ -63,29 +63,6 @@ public class ExchangerHttpClient {
     }
 
     private String getData(String uri) {
-        countBreakPoint++;
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest request = null;
-        HttpResponse<String> response = null;
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URI(uri))
-                    .timeout(Duration.of(10, SECONDS))
-                    .GET()
-                    .build();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        try {
-            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("count break point: " + countBreakPoint);
-        return response != null ? response.body() : null;
-    }
-
-    private String getDataFirst(String uri) {
         String result = "";
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(uri);
