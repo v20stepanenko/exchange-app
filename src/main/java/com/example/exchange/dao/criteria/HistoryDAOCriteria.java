@@ -2,6 +2,8 @@ package com.example.exchange.dao.criteria;
 
 import com.example.exchange.model.Currency;
 import com.example.exchange.model.History;
+import com.example.exchange.service.HistoryService;
+import com.example.exchange.service.HistoryService.Params;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class HistoryDAOCriteria {
 
     public List<History> findHistoryByRequestParam(Map<String, String> allParams) {
         int rangeData = Integer.MAX_VALUE;
-        String rangeParam = allParams.get("dataRange");
+        String rangeParam = allParams.get(Params.DATA_RANGE.getName());
         if (!Objects.isNull(rangeParam)) {
             rangeData = Integer.parseInt(rangeParam);
         }
@@ -35,24 +37,24 @@ public class HistoryDAOCriteria {
         Root<History> historyRoot = criteriaQuery.from(History.class);
         List<Predicate> predicates = new LinkedList<>();
 
-        String currencyFrom = allParams.get("fromCurrency");
+        String currencyFrom = allParams.get(Params.CURRENCY_FROM.getName());
         if (!Objects.isNull(currencyFrom)) {
             Join<History, Currency> currencyFromJoin = historyRoot.join("fromCurrency", JoinType.INNER);
             predicates.add(cb.equal(currencyFromJoin.get("code"), currencyFrom));
         }
-        String toCurrency = allParams.get("toCurrency");
+        String toCurrency = allParams.get(Params.CURRENCY_TO.getName());
         if (!Objects.isNull(toCurrency)) {
             Join<History, Currency> currencyToJoin = historyRoot.join("toCurrency", JoinType.INNER);
             predicates.add(cb.equal(currencyToJoin.get("code"), toCurrency));
         }
 
-        String fromDate = allParams.get("fromDate");
+        String fromDate = allParams.get(Params.FROM_DATE.getName());
         if (!Objects.isNull(fromDate)) {
             LocalDate dateTime = LocalDate.parse(fromDate);
             predicates.add(cb.greaterThan(historyRoot.get("timeStamp").as(LocalDate.class), dateTime));
         }
 
-        String toDate = allParams.get("toDate");
+        String toDate = allParams.get(Params.TO_DATE.getName());
         if (!Objects.isNull(toDate)) {
             LocalDate dateTime = LocalDate.parse(toDate);
             predicates.add(cb.lessThan(historyRoot.get("timeStamp").as(LocalDate.class), dateTime));
