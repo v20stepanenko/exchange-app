@@ -2,7 +2,6 @@ package com.example.exchange.dao.criteria;
 
 import com.example.exchange.model.Currency;
 import com.example.exchange.model.History;
-import com.example.exchange.service.HistoryService;
 import com.example.exchange.service.HistoryService.Params;
 import java.time.LocalDate;
 import java.util.LinkedList;
