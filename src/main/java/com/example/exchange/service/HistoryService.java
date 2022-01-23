@@ -104,9 +104,9 @@ public class HistoryService {
     public enum Params {
         CURRENCY_FROM("currencyFrom"),
         CURRENCY_TO("currencyTo"),
-        DATA_RANGE("dataRange"),
         FROM_DATE("fromDate"),
-        TO_DATE("toDate");
+        TO_DATE("toDate"),
+        DATA_RANGE("dataRange");
 
         private final String name;
 

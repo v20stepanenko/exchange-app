@@ -3,7 +3,7 @@
 /rates/{currencyFrom}/{currencyTo} просмот курса валют (* запрос сохраняеться в истории) <br>
 /history возращает историю (реализован фильтр по параметрам:  <br>
  - dataRange - макс количество обьектов в ответе <br>
- - fromCurrency=($aveliableCode) <br>
- - toCurrency={$aveliableCode) <br>
+ - currencyFrom=($aveliableCode) <br>
+ - currencyTo={$aveliableCode) <br>
  - fromDate={HHHH-mm-dd}<br>
  - toDate={HHHH-mm-dd}) <br>
