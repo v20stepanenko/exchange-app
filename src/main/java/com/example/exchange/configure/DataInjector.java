@@ -6,7 +6,6 @@ import com.example.exchange.model.Currency;
 import com.example.exchange.model.History;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 @Component

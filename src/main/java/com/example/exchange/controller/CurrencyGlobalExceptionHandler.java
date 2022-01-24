@@ -1,6 +1,5 @@
 package com.example.exchange.controller;
 
-import com.example.exchange.exceptions.BadParamsException;
 import com.example.exchange.exceptions.CurrencyException;
 import com.example.exchange.service.HistoryService;
 import java.time.LocalDateTime;
